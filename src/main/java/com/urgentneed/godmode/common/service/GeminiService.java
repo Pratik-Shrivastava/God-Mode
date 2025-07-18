@@ -1,4 +1,4 @@
-package com.urgentneed.godmode.service;
+package com.urgentneed.godmode.common.service;
 
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentResponse;
@@ -15,7 +15,8 @@ public class GeminiService {
                 client.models.generateContent(
                         "gemini-2.5-flash",
                         prompt,
-                        null);
+                        null
+                );
 
        return response.text();
     }
