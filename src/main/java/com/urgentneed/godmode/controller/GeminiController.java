@@ -2,6 +2,7 @@ package com.urgentneed.godmode.controller;
 
 import com.urgentneed.godmode.common.model.GeneralResponse;
 import com.urgentneed.godmode.common.service.GeminiService;
+import com.urgentneed.godmode.common.service.ImageStorageService;
 import com.urgentneed.godmode.constant.StatusCodeConstant;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -12,12 +13,11 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api/gemini")
 public class GeminiController {
     private final GeminiService geminiService;
+    private final ImageStorageService imageStorageService;
 
     @GetMapping(
             value = "/ask",
@@ -61,11 +62,34 @@ public class GeminiController {
                 ),
                 HttpStatus.OK
         );
-
-
-
-
-
     }
+
+
+    @PostMapping(
+            value = "/generate-image"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "SUCCESS"),
+            @ApiResponse(code = 400, message = "FAILED"),
+            @ApiResponse(code = 500, message = "Exception Occurred")
+    })
+    @ApiOperation(value = "")
+    public Object generate(
+            @RequestParam("prompt") String prompt,
+            @RequestParam(value = "images", required = false) List<MultipartFile> images
+    ) {
+
+        List<String> imageNames = this.geminiService.generateImages(prompt, images);
+        return new ResponseEntity<>(
+                new GeneralResponse(
+                        true,
+                        StatusCodeConstant.HTTP_OK,
+                        "Images has been generated!",
+                        imageNames
+                ),
+                HttpStatus.OK
+        );
+    }
+
 
 }
