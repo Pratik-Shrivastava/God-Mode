@@ -1,4 +1,4 @@
-# God Mode
+# God-Mode
 
 God Mode is a Spring Boot-based backend application built with Java 17. It acts as a powerful middleware that enables seamless integration of AI capabilities into various applications using REST APIs. The project leverages **Google's Gemini API** and **OpenAI APIs** to provide natural language processing, generation, and AI-powered features.
 
@@ -36,5 +36,4 @@ God Mode is a Spring Boot-based backend application built with Java 17. It acts 
 
 ---
 
-## 📁 Project Structure
 
