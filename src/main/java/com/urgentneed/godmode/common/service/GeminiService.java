@@ -21,7 +21,7 @@ import static com.urgentneed.godmode.constant.GeminiModelConstant.GEMINI_IMAGE_G
 @RequiredArgsConstructor
 public class GeminiService {
     private final Client client;
-    private final ImageStorageService imageStorageService;
+    private final FileService fileService;
 
     public String askGemini(String prompt) {
         GenerateContentResponse response =
@@ -73,7 +73,7 @@ public class GeminiService {
 
         List<Image> generatedImages = getImages(response);
 
-        generatedImages.forEach(image -> this.imageStorageService.store(image.imageName(), image.imageBytes()));
+        generatedImages.forEach(image -> this.fileService.store(image.imageName(), image.imageBytes()));
         return generatedImages.stream().map(Image::imageName).toList();
 
     }
