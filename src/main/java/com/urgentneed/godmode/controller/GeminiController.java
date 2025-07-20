@@ -2,7 +2,7 @@ package com.urgentneed.godmode.controller;
 
 import com.urgentneed.godmode.common.model.GeneralResponse;
 import com.urgentneed.godmode.common.service.GeminiService;
-import com.urgentneed.godmode.common.service.ImageStorageService;
+import com.urgentneed.godmode.common.service.FileService;
 import com.urgentneed.godmode.constant.StatusCodeConstant;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/api/gemini")
 public class GeminiController {
     private final GeminiService geminiService;
-    private final ImageStorageService imageStorageService;
+    private final FileService fileService;
 
     @GetMapping(
             value = "/ask",
