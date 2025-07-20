@@ -68,12 +68,20 @@ public class GeminiService {
                 .models
                 .generateContent(
                         GEMINI_IMAGE_GENERATION,
-                        content, config
+                        content,
+                        config
                 );
 
         List<Image> generatedImages = getImages(response);
 
-        generatedImages.forEach(image -> this.fileService.store(image.imageName(), image.imageBytes()));
+        generatedImages.forEach(image -> this
+                .fileService
+                .store(
+                        image.imageName(),
+                        image.imageBytes()
+                )
+        );
+
         return generatedImages.stream().map(Image::imageName).toList();
 
     }
@@ -92,9 +100,13 @@ public class GeminiService {
                 .map(inlineData -> {
                     MimeType mimeType = MimeType.valueOf(inlineData.mimeType().get()); // imageMimeType
                     return new Image(
-                            "%s.%s".formatted(UUID.randomUUID().toString(), mimeType.getSubtype()),
+                            "%s.%s".formatted(
+                                    UUID.randomUUID().toString(),
+                                    mimeType.getSubtype()
+                            ),
                             inlineData.data().get(), // imageBytes
-                            mimeType.toString());
+                            mimeType.toString()
+                    );
                 })
                 .toList();
     }
