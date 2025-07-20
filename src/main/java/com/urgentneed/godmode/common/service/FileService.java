@@ -13,13 +13,13 @@ import java.nio.file.Paths;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ImageStorageService {
+public class FileService {
 
     private final Settings settings;
 
 
-    public void store(String imageName, byte[] bytes) {
-        Path path = Paths.get(settings.getGenImagePath() + imageName);
+    public void store(String filename, byte[] bytes) {
+        Path path = Paths.get(settings.getGenImagePath() + filename);
         try {
             Files.write(path, bytes);
         } catch (IOException e) {
@@ -27,8 +27,8 @@ public class ImageStorageService {
         }
     }
 
-    public byte[] get(String imageName) {
-        Path path = Paths.get(settings.getGenImagePath() + imageName);
+    public byte[] get(String filename) {
+        Path path = Paths.get(settings.getGenImagePath() + filename);
         try {
             return Files.readAllBytes(path);
         } catch (IOException e) {
