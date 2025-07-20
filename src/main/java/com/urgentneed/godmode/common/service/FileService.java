@@ -36,4 +36,15 @@ public class FileService {
             return null;
         }
     }
+
+    public boolean delete(String filename) {
+        Path path = Paths.get(settings.getGenImagePath() + filename);
+        try {
+            return Files.deleteIfExists(path);
+        } catch (IOException e) {
+            log.error("I/O Error while deleting file: ", e);
+            return false;
+        }
+    }
+
 }
