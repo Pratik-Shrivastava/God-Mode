@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -78,8 +79,13 @@ public class GeminiController {
             @RequestParam("prompt") String prompt,
             @RequestParam(value = "images", required = false) List<MultipartFile> images
     ) {
+        List<String> imageNames = new ArrayList<>();
+        try {
+            imageNames = this.geminiService.generateImages(prompt, images);
+        } catch (Exception e) {
+            log.error("An error occurred: ", e);
+        }
 
-        List<String> imageNames = this.geminiService.generateImages(prompt, images);
         return new ResponseEntity<>(
                 new GeneralResponse(
                         true,
